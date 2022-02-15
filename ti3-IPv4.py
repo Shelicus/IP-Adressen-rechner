@@ -79,7 +79,8 @@ class ip4v:
         print("Die Net-Ip Binär ist: "+net_ip_bin)
 
         #Erstellung der Net-IP-dez
-        net_ip_dez = self.net_ip_dez()
+        var = self.net_ip_bin()
+        net_ip_dez = self.ip_dez(var)
         print("Die Net-Ip Dezimal ist: "+net_ip_dez)
 
         #Erstellung der niedrigsten Host-IP bin
@@ -95,7 +96,8 @@ class ip4v:
         print("Die Höchste Host-Ip in Binär ist: " + max_host_ip_bin)
 
         # Erstellung der höchste Host-IP dez.
-        max_host_ip_dez = self.max_host_dez()
+        var = self.max_host_bin()
+        max_host_ip_dez = self.ip_dez(var)
         print("Die Höchste Host-Ip in Dezimal ist: " + max_host_ip_dez)
 
     def netz_art(self):
@@ -186,27 +188,6 @@ class ip4v:
         net_ip = net_ip[:-1]
         return net_ip
 
-    def net_ip_dez(self):
-        counter = 0
-
-        net_ip_dez = ""
-        for i in range(4):
-            variable = 0
-
-            multiplikator = 1
-            for x in range(7, 0, -1):
-                zahl = int(self.net_ip_bin().split('.')[i][x])
-                variable = variable+zahl*multiplikator
-                multiplikator = multiplikator*2
-            zahl = int(self.net_ip_bin().split('.')[i][0])
-            variable = variable + zahl * multiplikator
-            net_ip_dez = net_ip_dez+str(variable)
-            counter = counter+1
-            if counter <= 3:
-                net_ip_dez = net_ip_dez+"."
-
-        return net_ip_dez
-
     def min_host_bin(self):
         net_ip = self.net_ip_bin()
         net_ip = net_ip[:-1]
@@ -214,7 +195,8 @@ class ip4v:
         return min_host_ip_bin
 
     def min_host_dez(self):
-        return self.net_ip_dez().split('.')[0]+"."+self.net_ip_dez().split('.')[1]+"."+self.net_ip_dez().split('.')[2]+"."+str(int(self.net_ip_dez().split('.')[3])+1)
+        var = self.net_ip_bin()
+        return self.ip_dez(var).split('.')[0]+"."+self.ip_dez(var).split('.')[1]+"."+self.ip_dez(var).split('.')[2]+"."+str(int(self.ip_dez(var).split('.')[3])+1)
 
 
     def max_host_bin(self):
@@ -241,7 +223,7 @@ class ip4v:
         max_host_ip_bin = max_host_ip_bin+"0"
         return max_host_ip_bin
 
-    def max_host_dez(self):                     #Ja ich weiß, ich hätte die obere Definition umschreiben können und zwei mal verwenden können. Aber hier musste ich nur zwei Dinger umändern um es so zu nutzen.
+    def ip_dez(self, var):
         counter = 0
         net_ip_dez = ""
         for i in range(4):
@@ -249,10 +231,10 @@ class ip4v:
 
             multiplikator = 1
             for x in range(7, 0, -1):
-                zahl = int(self.max_host_bin().split('.')[i][x])
+                zahl = int(var.split('.')[i][x])
                 variable = variable + zahl * multiplikator
-                multiplikator = multiplikator * 2
-            zahl = int(self.max_host_bin().split('.')[i][0])
+                multiplikator *= 2
+            zahl = int(var.split('.')[i][0])
             variable = variable + zahl * multiplikator
             net_ip_dez = net_ip_dez + str(variable)
             counter = counter + 1
@@ -260,6 +242,7 @@ class ip4v:
                 net_ip_dez = net_ip_dez + "."
 
         return net_ip_dez
+
 
 if __name__ == "__main__":
     netzwerks_bits = input("Gebe mir die Anzahl der Netzwerksbits an: ")
