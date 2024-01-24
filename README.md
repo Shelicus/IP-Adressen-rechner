@@ -4,6 +4,7 @@
 
 ## Beschreibung:
 Berechnet bei Eingabe einer IPv4 Adresse die Subnetze, CIDR-Maske, niedrigste Host-IP und vieles mehr…
+Das Repository wird nicht mehr gewartet und nur noch in read-only.
 
 
 ## Verzeichnis:
